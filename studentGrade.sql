@@ -24,23 +24,33 @@ CREATE TABLE Teachers (
 
 DROP TABLE IF EXISTS Courses;
 CREATE TABLE Courses (
-    code CHAR(16) PRIMARY KEY,
+    cid CHAR(16) PRIMARY KEY,
     courseName VARCHAR(100) NOT NULL,
-    tid INT NOT NULL,
+    tid INT(9) NOT NULL,
     academicSeason ENUM('Winter', 'Fall', 'Summer'),
     academicYear YEAR,
     FOREIGN KEY (tid)
         REFERENCES Teachers (tid)
 );
 
+DROP TABLE IF EXISTS Student_Courses;
+CREATE TABLE Student_Courses (
+	cid CHAR(16)NOT NULL,
+    FOREIGN KEY (cid)
+        REFERENCES Courses (cid),
+    sid INT(9) NOT NULL,
+	FOREIGN KEY (sid)
+        REFERENCES Students (sid)
+);
+
 DROP TABLE IF EXISTS AcademicRecords;
 CREATE TABLE AcademicRecords (
     recordId INT AUTO_INCREMENT PRIMARY KEY,
+    grade INT NOT NULL,
     sid INT(9) NOT NULL,
     FOREIGN KEY (sid)
         REFERENCES Students (sid),
-    code CHAR(16) NOT NULL,
-    FOREIGN KEY (code)
-        REFERENCES Courses (code),
-    grade INT NOT NULL
+    cid CHAR(16) NOT NULL,
+    FOREIGN KEY (cid)
+        REFERENCES Courses (cid)
 );
