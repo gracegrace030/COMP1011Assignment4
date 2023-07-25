@@ -1,32 +1,41 @@
 package com.example.javagroup;
 
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.sql.*;
 
 public class Student {
     private int sid;
     private String firstName;
     private String lastName;
     private String program;
-    private int intakeYear;
+    private Year intakeYear;
     public enum intakeSeasonEnum { // enum or ArrayList?
         FALL, WINTER, SUMMER
     };
     private intakeSeasonEnum intakeSeason;
-    private int graduateYear;
+    private Year graduateYear;
+//    private List<String> validProgramList; // Course Class
+//    public void addValidProgram(String program){
+//        validProgramList.add(program);
+//    }
 
     // Add Error Messages ArrayList later
 
     // Constructor ==========================================
-    public Student(int sid, String firstName, String lastName, String program, int intakeYear, intakeSeasonEnum intakeSeason, int graduateYear) {
-        this.sid = sid;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.program = program;
-        this.intakeYear = intakeYear;
-        this.intakeSeason = intakeSeason;
-        this.graduateYear = graduateYear;
+    public Student(int sid, String firstName, String lastName, String program, Year intakeYear, String validIntakeSeason, Year graduateYear) {
+        setSid(sid);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setProgram(program);
+        setIntakeYear(intakeYear);
+        setIntakeSeason(validIntakeSeason);
+        setGraduateYear(graduateYear);
     }
+
+    public Student() {}
 
     // Getters and Setters ==========================================
     public int getSid() {
@@ -74,30 +83,22 @@ public class Student {
     }
 
     public void setProgram(String program) {
-        List<String> validProgramList = validProgramList();
-        String validProgram = program.trim().toLowerCase();
-        if (validProgramList.contains(program)){
-            this.program = program;
-        }
-        else {
-            System.err.println("Invalid program. Please select a valid program");
-        }
+//        List<String> validProgramList = validProgramList();
+//        String validProgram = program.trim().toLowerCase();
+        this.program = program;
+//        if (validProgramList.contains(program)){
+//            this.program = program;
+//        }
+//        else {
+//            System.err.println("Invalid program. Please select a valid program");
+//        }
     }
 
-    public static List<String> validProgramList(){
-        // fetch valid programs from DB
-        return Arrays.asList(
-                "Program A",
-                "Program B",
-                "Program C"
-        );
-    }
-
-    public int getIntakeYear() {
+    public Year getIntakeYear() {
         return intakeYear;
     }
 
-    public void setIntakeYear(int intakeYear) {
+    public void setIntakeYear(Year intakeYear) {
         this.intakeYear = intakeYear;
     }
 
@@ -105,19 +106,82 @@ public class Student {
         return intakeSeason;
     }
 
-    public void setIntakeSeason(intakeSeasonEnum intakeSeason) {
-        this.intakeSeason = intakeSeason;
+    public void setIntakeSeason(String intakeSeason) {
+        String validIntakeSeason = intakeSeason.trim().toUpperCase();
+        // if (intakeSeasonEnum.valueOf(validIntakeSeason).equals(validIntakeSeason)){
+        for (intakeSeasonEnum season : intakeSeasonEnum.values()) {
+            if (season.toString().equals(validIntakeSeason)){
+                this.intakeSeason = intakeSeasonEnum.valueOf(validIntakeSeason);
+                break;
+            }
+        }
+        if(this.intakeSeason == null){
+            System.err.println("Invalid season. Please select a valid season");
+        }
     }
 
-    public int getGraduateYear() {
+
+    public Year getGraduateYear() {
         return graduateYear;
     }
 
-    public void setGraduateYear(int graduateYear) {
+    public void setGraduateYear(Year graduateYear) {
         this.graduateYear = graduateYear;
     }
 
-    // Database ==========================================
+    // MySQL Database ==========================================
 
+    public static List<Student> getStudentFromDB(){
+
+        List<Student> studentList = new ArrayList<Student>() {
+        };
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/COMP1011AS4",
+                    "root", "root?");
+
+            Statement statement;
+            statement = connection.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(
+                    "select * from Students");
+
+            int sid;
+            String firstName;
+            String lastName;
+            String program;
+            Year intakeYear;
+            String intakeSeason;
+            Year graduateYear;
+
+            while (resultSet.next()) {
+                sid = resultSet.getInt("sid");
+                firstName = resultSet.getString("firstName");
+                lastName = resultSet.getString("lastName");
+                program = resultSet.getString("program");
+                intakeYear = Year.of(resultSet.getInt("intakeYear"));
+                intakeSeason = resultSet.getString("intakeSeason");
+                graduateYear = Year.of(resultSet.getInt("graduateYear"));
+
+                studentList.add(new Student(sid, firstName, lastName, program, intakeYear, intakeSeason, graduateYear));
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+        }
+
+        return studentList;
+    }
+
+    public String toString(){
+        return String.format("SID: %s, Name: %s %s, Program: %s, Intake Year: %s, Intake Season: %s, Graduate Year: %s", sid, firstName, lastName, program, intakeYear, intakeSeason, graduateYear);
+    }
 
 }
