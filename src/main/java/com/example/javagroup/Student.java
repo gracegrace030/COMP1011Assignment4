@@ -142,7 +142,7 @@ public class Student {
             // change the connection if pull to local
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/COMP1011AS4",
-                    "root", "root?");
+                    "root", "root");
 
             Statement statement;
             statement = connection.createStatement();

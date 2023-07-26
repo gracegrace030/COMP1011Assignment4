@@ -30,7 +30,7 @@ public class MainViewController {
 
     @FXML
     void openStudent(ActionEvent event) throws IOException {
-        changeScene("teacher-edit-view.fxml", event);
+        changeScene("course-view.fxml", event);
     }
 
     @FXML
