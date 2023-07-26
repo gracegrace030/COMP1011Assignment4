@@ -3,34 +3,23 @@ package com.example.javagroup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class TeacherEditController {
-
-    @FXML
-    private ChoiceBox<?> academicSeasonMenu;
-
-    @FXML
-    private TextField academicYearField;
+public class TeacherEditController implements Initializable {
 
     @FXML
-    private Button addCourseButton;
-
-    @FXML
-    private ChoiceBox<?> courseMenu;
-
-    @FXML
-    private Button createProfileButton;
+    private Button editProfileButton;
 
     @FXML
     private Label errorLabel;
@@ -45,18 +34,28 @@ public class TeacherEditController {
     private Label teacherNameLabel;
 
     @FXML
-    private Label teacherNameLabel1;
-
-    @FXML
     private Label tidLabel;
+    @FXML
+    Teacher tempTeacher;
 
     @FXML
-    void addCourse(MouseEvent event) {
-        // to be implemented
-        // changeScene("course-create-view.fxml", event);
+    void editProfile(ActionEvent event) throws IOException {
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+
+        tempTeacher.setFirstName(firstName);
+        tempTeacher.setLastName(lastName);
+
+        boolean isDBSuccess = Teacher.updateTeacherToDB(tempTeacher);
+
+        // Go back to view if update successfully
+        if (isDBSuccess){
+            changeScene("course-view.fxml", event);
+        }
     }
 
-    public void returnToTeachers(ActionEvent event) throws IOException {
+    @FXML
+    void returnToTeachers(ActionEvent event) throws IOException {
         changeScene("teacher-view.fxml", event);
     }
 
@@ -66,5 +65,17 @@ public class TeacherEditController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    // Data from previous window
+    public void setData(Teacher data){
+        tidLabel.setText(String.valueOf(data.getTid()));
+        firstNameField.setText(data.getFirstName());
+        lastNameField.setText(data.getLastName());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

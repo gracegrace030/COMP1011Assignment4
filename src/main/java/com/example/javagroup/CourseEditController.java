@@ -27,7 +27,7 @@ public class CourseEditController implements Initializable {
     private TextField academicYearField;
 
     @FXML
-    private TextField cidField;
+    private Label cidField;
 
     @FXML
     private Label courseNameLabel;
@@ -45,18 +45,26 @@ public class CourseEditController implements Initializable {
     private ChoiceBox<String> teacherMenu;
 
     @FXML
-    void createCourse(ActionEvent event) throws IOException {
+    Course tempCourse;
 
-        String cid = cidField.getText();
+    @FXML
+    void editCourse(ActionEvent event) throws IOException {
+
+//        String cid = cidField.getText();
         String courseName = courseNameField.getText();
         String tidText = teacherMenu.getValue().split(",")[0];
-        System.out.println(tidText);
         int tid = Integer.parseInt(tidText);
-        System.out.println(tid);
         String season = academicSeasonMenu.getValue();
         Year academicYear = Year.of(Integer.parseInt(academicYearField.getText()));
 
-        boolean isDBSuccess = Course.createCourseToDB(new Course(cid, courseName, tid, season, academicYear));
+//        tempCourse.setCid(cid);
+        tempCourse.setCourseName(courseName);
+        tempCourse.setTid(tid);
+        tempCourse.setSeason(season);
+        tempCourse.setAcademicYear(academicYear);
+
+
+        boolean isDBSuccess = Course.updateCourseToDB(tempCourse);
 
         // Go back to view if update successfully
         if (isDBSuccess){
@@ -78,6 +86,7 @@ public class CourseEditController implements Initializable {
 
     // Data from previous window
     public void setData(Course data){
+        tempCourse = data;
         cidField.setText(data.getCid());
         courseNameField.setText(data.getCourseName());
         String item = String.format("%s, %s %s", data.getTid(), data.gettFirstName(), data.gettLastName());

@@ -66,17 +66,7 @@ public class Course {
     }
 
     public void setTid(int tid) {
-        boolean hasTid = false;
-        for (Teacher teacher : teacherList){
-            if (teacher.getTid() == tid){
-                this.tid = tid;
-                hasTid = true;
-                break;
-            }
-        }
-        if (!hasTid){
-            System.err.println("This teacher isn't in the teacher list.");
-        }
+        this.tid = tid;
     }
 
     public String gettFirstName() {
@@ -225,14 +215,14 @@ public class Course {
             connection = DriverManager.getConnection(
                     dbURL, userName, password);
 
-            String query = "UPDATE Courses SET cid = ?, courseName = ?, tid = ?, academicSeason = ?, academicYear = ?";
+            String query = "UPDATE Courses SET courseName = ?, tid = ?, academicSeason = ?, academicYear = ? WHERE cid = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
-            preparedStmt.setString   (1, course.getCid());
-            preparedStmt.setString(2, course.getCourseName());
-            preparedStmt.setInt   (3, course.getTid());
-            preparedStmt.setString(4, String.valueOf(course.getSeason()));
-            preparedStmt.setInt(5, Integer.parseInt(String.valueOf(course.getAcademicYear())));
+            preparedStmt.setString(1, course.getCourseName());
+            preparedStmt.setInt   (2, course.getTid());
+            preparedStmt.setString(3, String.valueOf(course.getSeason()));
+            preparedStmt.setInt(4, Integer.parseInt(String.valueOf(course.getAcademicYear())));
+            preparedStmt.setString   (5, course.getCid());
 
             // execute the java preparedstatement
             preparedStmt.executeUpdate();

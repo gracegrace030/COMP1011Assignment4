@@ -1,23 +1,24 @@
 package com.example.javagroup;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Teacher {
 
     private int tid;
     private String firstName;
     private String lastName;
+    public static int count = 1;
 
     public Teacher(int tid, String firstName, String lastName) {
         this.tid = tid;
         this.firstName = firstName;
         this.lastName = lastName;
+        autoIncrementId();
     }
 
     public int getTid() {
@@ -56,9 +57,17 @@ public class Teacher {
         }
     }
 
+    public static void autoIncrementId(){
+        count++;
+    }
+
+    public static void resetId(){
+        count = 1;
+    }
+
     @Override
     public String toString() {
-        return tid + ", " + lastName + " " + firstName;
+        return tid + ", " + firstName + " " + lastName;
     }
 
     // MySQL Database ==========================================
@@ -109,4 +118,106 @@ public class Teacher {
 
         return teacherList;
     }
+
+
+    public static List<List<Object>> getTeacherCoursesFromDB(int tid){
+        List<List<Object>> courseInfo = new ArrayList<List<Object>>();
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            Statement statement;
+            statement = connection.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(
+                    "SELECT * FROM Courses WHERE tid = " + tid);
+
+
+            String cid;
+//            String courseName;
+            String validSeason;
+            Year academicYear;
+
+            while (resultSet.next()) {
+
+                cid = resultSet.getString("cid");
+//                courseName = resultSet.getString("courseName");
+                validSeason = resultSet.getString("academicSeason");
+                academicYear = Year.of(resultSet.getInt("academicYear"));
+
+                List<Object> tempList = Arrays.asList(cid, validSeason, academicYear);
+                courseInfo.add(tempList);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+        }
+
+        return courseInfo;
+    }
+
+    public static boolean createTeacherToDB(Teacher teacher) {
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            String query = "INSERT INTO Teachers VALUES(?,?,?)";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setString   (1, String.valueOf(teacher.getTid()));
+            preparedStmt.setString(2, teacher.getFirstName());
+            preparedStmt.setString(3, teacher.getLastName());
+
+            // execute the java preparedstatement
+            preparedStmt.executeUpdate();
+
+            connection.close();
+            return true;
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+            return false;
+        }
+    }
+
+    public static boolean updateTeacherToDB(Teacher teacher){
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            String query = "UPDATE Tearchers SET firstName = ?, lastName = ? WHERE tid = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setString(1, teacher.getFirstName());
+            preparedStmt.setString(2, teacher.getLastName());
+            preparedStmt.setString   (3, String.valueOf(teacher.getTid()));
+
+            // execute the java preparedstatement
+            preparedStmt.executeUpdate();
+
+            connection.close();
+            return true;
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+            return false;
+        }
+    }
+
+
 }

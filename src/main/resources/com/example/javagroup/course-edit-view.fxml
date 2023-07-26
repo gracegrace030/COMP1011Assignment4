@@ -31,7 +31,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="cidField" prefHeight="26.0" prefWidth="315.0" />
+                  <Label fx:id="cidField" />
                </children>
             </HBox>
             <HBox prefHeight="13.0" prefWidth="406.0" spacing="25.0">
@@ -80,7 +80,7 @@
          </padding>
       </VBox>
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="83.0" layoutY="449.0" prefHeight="54.0" prefWidth="557.0" style="-fx-text-fill: #cc0000;" text="" />
-      <Button fx:id="createCourseButton" layoutX="627.0" layoutY="437.0" mnemonicParsing="false" onAction="#createCourse" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: #7f68d5; -fx-text-fill: #ffff;" text="Confirm" />
+      <Button fx:id="createCourseButton" layoutX="627.0" layoutY="437.0" mnemonicParsing="false" onAction="#editCourse" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: #7f68d5; -fx-text-fill: #ffff;" text="Confirm" />
       <Button layoutX="40.0" layoutY="463.0" mnemonicParsing="false" onAction="#returnToCourse" text="Back to Course" />
    </children>
 </AnchorPane>
