@@ -17,12 +17,7 @@ public class Student {
     };
     private intakeSeasonEnum intakeSeason;
     private Year graduateYear;
-//    private List<String> validProgramList; // Course Class
-//    public void addValidProgram(String program){
-//        validProgramList.add(program);
-//    }
-
-    // Add Error Messages ArrayList later
+    public static int count = 1;
 
     // Constructor ==========================================
     public Student(int sid, String firstName, String lastName, String program, Year intakeYear, String validIntakeSeason, Year graduateYear) {
@@ -33,9 +28,8 @@ public class Student {
         setIntakeYear(intakeYear);
         setIntakeSeason(validIntakeSeason);
         setGraduateYear(graduateYear);
+        autoIncrementId();
     }
-
-    public Student() {}
 
     // Getters and Setters ==========================================
     public int getSid() {
@@ -129,7 +123,19 @@ public class Student {
         this.graduateYear = graduateYear;
     }
 
+    public static void autoIncrementId(){
+        count++;
+    }
+
+    public static void resetId(){
+        count = 1;
+    }
+
     // MySQL Database ==========================================
+
+    static String dbURL = "jdbc:mysql://localhost:3306/COMP1011AS4";
+    static String userName = "root";
+    static String password = "root";
 
     public static List<Student> getStudentFromDB(){
 
@@ -141,8 +147,7 @@ public class Student {
             Class.forName("com.mysql.cj.jdbc.Driver");
             // change the connection if pull to local
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/COMP1011AS4",
-                    "root", "root");
+                    dbURL, userName, password);
 
             Statement statement;
             statement = connection.createStatement();
@@ -180,13 +185,87 @@ public class Student {
         return studentList;
     }
 
-//    public String toString(){
-//        return String.format("SID: %s, Name: %s %s, Program: %s, Intake Year: %s, Intake Season: %s, Graduate Year: %s", sid, firstName, lastName, program, intakeYear, intakeSeason, graduateYear);
-//    }
+    public static List<List<Object>> getStudentCoursesFromDB(int sid){
+        List<List<Object>> courseInfo = new ArrayList<List<Object>>();
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            Statement statement;
+            statement = connection.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(
+                    "SELECT * FROM AcademicRecords LEFT JOIN Courses ON (AcademicRecords.cid = Courses.cid) WHERE AcademicRecords.sid = " + sid);
+
+
+            String cid;
+            String validSeason;
+            Year academicYear;
+            float grade;
+
+            while (resultSet.next()) {
+
+                cid = resultSet.getString("cid");
+//                courseName = resultSet.getString("courseName");
+                validSeason = resultSet.getString("academicSeason");
+                academicYear = Year.of(resultSet.getInt("academicYear"));
+                grade = resultSet.getFloat("grade");
+
+                List<Object> tempList = Arrays.asList(cid, validSeason, academicYear, grade);
+                courseInfo.add(tempList);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+        }
+
+        return courseInfo;
+    }
+
+    public static boolean createStudentToDB(Student student) {
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            String query = "INSERT INTO Students VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            // Student(sid, firstName, lastName, program, intakeYear, validIntakeSeason, graduateYear)
+            preparedStmt.setInt(1, student.getSid());
+            preparedStmt.setString(2, student.getFirstName());
+            preparedStmt.setString(3, student.getLastName());
+            preparedStmt.setString(4, student.getProgram());
+            preparedStmt.setString(5, String.valueOf(student.getIntakeYear()));
+            preparedStmt.setString(6, student.getIntakeSeason().name());
+            preparedStmt.setString(7, String.valueOf(student.getGraduateYear()));
+
+            // execute the java preparedstatement
+            preparedStmt.executeUpdate();
+
+            connection.close();
+            return true;
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+            return false;
+        }
+    }
+
 
     @Override
     public String toString() {
-        return sid + " " + lastName + " " +  firstName;
+        return sid + ", " + firstName + " " + lastName;
     }
 
 }
