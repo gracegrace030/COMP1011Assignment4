@@ -12,7 +12,7 @@ public class Student {
     private String lastName;
     private String program;
     private Year intakeYear;
-    public enum intakeSeasonEnum { // enum or ArrayList?
+    public enum intakeSeasonEnum {
         FALL, WINTER, SUMMER
     };
     private intakeSeasonEnum intakeSeason;
@@ -180,8 +180,13 @@ public class Student {
         return studentList;
     }
 
-    public String toString(){
-        return String.format("SID: %s, Name: %s %s, Program: %s, Intake Year: %s, Intake Season: %s, Graduate Year: %s", sid, firstName, lastName, program, intakeYear, intakeSeason, graduateYear);
+//    public String toString(){
+//        return String.format("SID: %s, Name: %s %s, Program: %s, Intake Year: %s, Intake Season: %s, Graduate Year: %s", sid, firstName, lastName, program, intakeYear, intakeSeason, graduateYear);
+//    }
+
+    @Override
+    public String toString() {
+        return sid + " " + lastName + " " +  firstName;
     }
 
 }

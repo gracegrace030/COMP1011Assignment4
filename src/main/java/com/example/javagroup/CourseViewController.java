@@ -60,7 +60,7 @@ public class CourseViewController implements Initializable {
         cidLabel.setText(course.getCid());
         courseNameLabel.setText(course.getCourseName());
         tidLabel.setText(Integer.toString(course.getTid()));
-//        teacherNameLabel.setText();
+        teacherNameLabel.setText((course.gettFirstName()+ " " + course.gettLastName()));
         academicSeasonLabel.setText(String.valueOf(course.getSeason()));
         academicYearLabel.setText(String.valueOf(course.getAcademicYear()));
     }
@@ -80,12 +80,15 @@ public class CourseViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Course[] courses = new Course[2];
+        // Dummy Data
+//        Course[] courses = new Course[2];
+//
+//        courses[0] = new Course("COMP1011", "OOP", 2,"Summer", Year.of(2000));
+//        courses[1] = new Course("COMP1000", "AAA", 1,"Winter", Year.of(2002));
 
-        courses[0] = new Course("COMP1011", "OOP", 2,"Summer", Year.of(2000));
-        courses[1] = new Course("COMP1000", "AAA", 1,"Winter", Year.of(2002));
-
-        for (Course course: courses) {
+        // Display all the courses in DB
+        Course.resetId();
+        for (Course course: Course.getCourseFromDB()) {
             courseListPane.getItems().add(course);
         }
     }
