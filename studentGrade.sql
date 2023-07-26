@@ -53,7 +53,7 @@ CREATE TABLE AcademicRecords (
     FOREIGN KEY (cid)
         REFERENCES Courses (cid),
 	
-    grade DECIMAL(4,1) NOT NULL
+    grade DECIMAL(4,1) NULL
 );
 
 -- ============================================
