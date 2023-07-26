@@ -113,11 +113,13 @@ public class StudentCreateController implements Initializable {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String program = programField.getText();
-        Year intakeYear = Year.of(Integer.parseInt(intakeSeasonMenu.getValue()));
-        String validIntakeSeason = academicSeasonMenu.getValue();
+        Year intakeYear = Year.of(Integer.parseInt(intakeYearField.getText()));
+        String validIntakeSeason = intakeSeasonMenu.getValue();
         Year graduateYear = Year.of(Integer.parseInt(graduateYearField.getText()));
 
-        boolean isDBSuccess = Student.createStudentToDB(new Student(sid, firstName, lastName, program, intakeYear, validIntakeSeason, graduateYear));
+        String cid = courseMenu.getValue();
+
+        boolean isDBSuccess = Student.createStudentToDB(new Student(sid, firstName, lastName, program, intakeYear, validIntakeSeason, graduateYear), cid);
 
         // Go back to view if update successfully
         if (isDBSuccess){

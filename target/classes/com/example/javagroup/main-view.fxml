@@ -15,8 +15,8 @@
       </Label>
       <HBox alignment="CENTER" layoutX="77.0" layoutY="296.0" prefHeight="100.0" prefWidth="653.0" spacing="50.0">
          <children>
-            <Button fx:id="studentButton" mnemonicParsing="false" onAction="#openStudent" prefHeight="59.0" prefWidth="199.0" text="Students" />
             <Button fx:id="teacherButton" mnemonicParsing="false" onAction="#openTeacher" prefHeight="59.0" prefWidth="199.0" text="Teachers" />
+            <Button fx:id="studentButton" mnemonicParsing="false" onAction="#openStudent" prefHeight="59.0" prefWidth="199.0" text="Students" />
             <Button fx:id="courseButton" layoutX="245.0" layoutY="31.0" mnemonicParsing="false" onAction="#openCourse" prefHeight="59.0" prefWidth="199.0" text="Courses" />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" prefHeight="59.0" prefWidth="199.0" text="Exit" />
          </children>

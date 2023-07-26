@@ -54,6 +54,8 @@ public class StudentEditController {
 
     @FXML
     private TextField graduateYearField;
+    @FXML
+    private TextField programField;
 
     @FXML
     private ChoiceBox<String> intakeSeasonMenu;
@@ -79,7 +81,7 @@ public class StudentEditController {
     void editProfile(ActionEvent event) throws IOException {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
-//        String program = programField.getText();
+        String program = programField.getText();
         Year intakeYear = Year.of(Integer.parseInt(intakeYearField.getText()));
         String validIntakeSeason = intakeSeasonMenu.getValue();
         Year graduateYear = Year.of(Integer.parseInt(graduateYearField.getText()));
@@ -120,7 +122,7 @@ public class StudentEditController {
         sidLabel.setText(String.valueOf(data.getSid()));
         firstNameField.setText(data.getFirstName());
         lastNameField.setText(data.getLastName());
-//        programField.setText(data.getProgram());
+        programField.setText(data.getProgram());
         intakeYearField.setText(String.valueOf(data.getIntakeYear()));
         intakeSeasonMenu.setValue(String.valueOf(data.getIntakeSeason()));
         graduateYearField.setText(String.valueOf(data.getGraduateYear()));

@@ -65,6 +65,16 @@
                                     <TextField fx:id="lastNameField" prefHeight="26.0" prefWidth="315.0" />
                                  </children>
                               </HBox>
+                              <HBox prefHeight="13.0" prefWidth="406.0" spacing="25.0">
+                                 <children>
+                                    <Label prefHeight="20.0" prefWidth="180.0" text="Program:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="programField" prefHeight="26.0" prefWidth="315.0" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                         <VBox spacing="10.0">
