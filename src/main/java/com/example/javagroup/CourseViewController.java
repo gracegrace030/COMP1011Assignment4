@@ -48,6 +48,9 @@ public class CourseViewController implements Initializable {
     private Label tidLabel;
 
     @FXML
+    private Button editCourseButton;
+
+    @FXML
     void returnToMenu(ActionEvent event) throws IOException {
         changeScene("main-view.fxml", event);
     }
@@ -67,16 +70,39 @@ public class CourseViewController implements Initializable {
 
     @FXML
     void createCourse(ActionEvent event) throws IOException {
-        changeScene("course-edit-view.fxml", event);
+        changeScene("course-create-view.fxml", event);
+    }
+
+    @FXML
+    void editCourse(ActionEvent event) throws IOException {
+        Course course = courseListPane.getSelectionModel().getSelectedItem();
+        changeSceneWithData("course-edit-view.fxml", event, course);
     }
 
     public void changeScene(String fxmlpath, ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fxmlpath));
+
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
+    public void changeSceneWithData(String fxmlpath, ActionEvent event, Course data) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlpath));
+        Parent root = loader.load();
+
+        // Get the controller of the new scene
+        CourseEditController controller = loader.getController();
+        // Set the data in the controller
+        controller.setData(data);
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

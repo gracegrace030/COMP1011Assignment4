@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="498.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javagroup.MainViewController">
    <children>
       <Label layoutX="187.0" layoutY="94.0" text="Academic Information System (AIS)" underline="true">
@@ -18,6 +17,7 @@
          <children>
             <Button fx:id="studentButton" mnemonicParsing="false" onAction="#openStudent" prefHeight="59.0" prefWidth="199.0" text="Students" />
             <Button fx:id="teacherButton" mnemonicParsing="false" onAction="#openTeacher" prefHeight="59.0" prefWidth="199.0" text="Teachers" />
+            <Button fx:id="courseButton" layoutX="245.0" layoutY="31.0" mnemonicParsing="false" onAction="#openCourse" prefHeight="59.0" prefWidth="199.0" text="Courses" />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitApp" prefHeight="59.0" prefWidth="199.0" text="Exit" />
          </children>
       </HBox>

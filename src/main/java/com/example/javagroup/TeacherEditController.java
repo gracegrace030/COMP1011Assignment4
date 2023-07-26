@@ -53,7 +53,7 @@ public class TeacherEditController {
     @FXML
     void addCourse(MouseEvent event) {
         // to be implemented
-        // changeScene("course-edit-view.fxml", event);
+        // changeScene("course-create-view.fxml", event);
     }
 
     public void returnToTeachers(ActionEvent event) throws IOException {

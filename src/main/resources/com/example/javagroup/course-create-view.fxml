@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="517.0" prefWidth="812.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javagroup.CourseEditController">
+<AnchorPane prefHeight="517.0" prefWidth="812.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javagroup.CourseCreateController">
    <children>
       <Label layoutX="51.0" layoutY="39.0" prefHeight="38.0" prefWidth="290.0" text="Course Information">
          <font>
@@ -19,7 +19,7 @@
       </Label>
       <VBox layoutX="51.0" layoutY="95.0" prefHeight="328.0" prefWidth="698.0" spacing="10.0">
          <children>
-            <Label fx:id="courseNameLabel" text="Edit Course" underline="true">
+            <Label fx:id="courseNameLabel" text="New Course" underline="true">
                <font>
                   <Font size="18.0" />
                </font>
@@ -80,7 +80,7 @@
          </padding>
       </VBox>
       <Label fx:id="errorLabel" alignment="CENTER" layoutX="83.0" layoutY="449.0" prefHeight="54.0" prefWidth="557.0" style="-fx-text-fill: #cc0000;" text="" />
-      <Button fx:id="createCourseButton" layoutX="627.0" layoutY="437.0" mnemonicParsing="false" onAction="#createCourse" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: #7f68d5; -fx-text-fill: #ffff;" text="Confirm" />
+      <Button fx:id="createCourseButton" layoutX="627.0" layoutY="437.0" mnemonicParsing="false" onAction="#createCourse" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: #7f68d5; -fx-text-fill: #ffff;" text="Create Course" />
       <Button layoutX="40.0" layoutY="463.0" mnemonicParsing="false" onAction="#returnToCourse" text="Back to Course" />
    </children>
 </AnchorPane>

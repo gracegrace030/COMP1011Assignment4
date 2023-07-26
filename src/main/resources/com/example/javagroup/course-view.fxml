@@ -114,6 +114,7 @@
         </VBox>
       <ListView fx:id="courseListPane" layoutX="41.0" layoutY="102.0" onMouseClicked="#selectCourse" prefHeight="343.0" prefWidth="200.0" />
       <Button fx:id="menuButton" layoutX="663.0" layoutY="444.0" mnemonicParsing="false" onAction="#returnToMenu" prefHeight="38.0" prefWidth="98.0" style="-fx-background-color: #6e56d4; -fx-text-fill: #fff;" text="Back to Menu" />
+      <Button fx:id="editCourseButton" layoutX="267.0" layoutY="450.0" mnemonicParsing="false" onAction="#editCourse" prefHeight="26.0" prefWidth="90.0" text="Edit" />
       <Button fx:id="addCourseButton" layoutX="41.0" layoutY="449.0" mnemonicParsing="false" onAction="#createCourse" style="-fx-border-color: transparent;" text="+ Add Course" />
     </children>
 </AnchorPane>

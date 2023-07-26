@@ -18,7 +18,7 @@ import java.net.URL;
 import java.time.Year;
 import java.util.ResourceBundle;
 
-public class CourseEditController implements Initializable {
+public class CourseCreateController implements Initializable {
 
     @FXML
     private ChoiceBox<String> academicSeasonMenu;
@@ -74,16 +74,6 @@ public class CourseEditController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    // Data from previous window
-    public void setData(Course data){
-        cidField.setText(data.getCid());
-        courseNameField.setText(data.getCourseName());
-        String item = String.format("%s, %s %s", data.getTid(), data.gettFirstName(), data.gettLastName());
-        teacherMenu.setValue(item);
-        academicSeasonMenu.setValue(data.getSeason().name());
-        academicYearField.setText(String.valueOf(data.getAcademicYear()));
     }
 
     @Override

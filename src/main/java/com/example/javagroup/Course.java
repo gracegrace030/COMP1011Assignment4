@@ -186,7 +186,7 @@ public class Course {
         return courseList;
     }
 
-    public static void updateCourseToDB(Course course){
+    public static boolean createCourseToDB(Course course){
         Connection connection = null;
         try {
             // below two lines are used for connectivity.
@@ -208,9 +208,41 @@ public class Course {
             preparedStmt.executeUpdate();
 
             connection.close();
+            return true;
         }
         catch (Exception exception) {
             System.out.println(exception);
+            return false;
+        }
+    }
+
+    public static boolean updateCourseToDB(Course course){
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            String query = "UPDATE Courses SET cid = ?, courseName = ?, tid = ?, academicSeason = ?, academicYear = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setString   (1, course.getCid());
+            preparedStmt.setString(2, course.getCourseName());
+            preparedStmt.setInt   (3, course.getTid());
+            preparedStmt.setString(4, String.valueOf(course.getSeason()));
+            preparedStmt.setInt(5, Integer.parseInt(String.valueOf(course.getAcademicYear())));
+
+            // execute the java preparedstatement
+            preparedStmt.executeUpdate();
+
+            connection.close();
+            return true;
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+            return false;
         }
     }
 

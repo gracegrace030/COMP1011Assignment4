@@ -24,18 +24,26 @@ public class MainViewController {
     private Button teacherButton;
 
     @FXML
+    private Button courseButton;
+
+    @FXML
     void exitApp(ActionEvent event) {
         Platform.exit();
     }
 
     @FXML
     void openStudent(ActionEvent event) throws IOException {
-        changeScene("course-view.fxml", event);
+        changeScene("student-view.fxml", event);
     }
 
     @FXML
     void openTeacher(ActionEvent event) throws IOException {
         changeScene("teacher-view.fxml", event);
+    }
+
+    @FXML
+    void openCourse(ActionEvent event) throws IOException {
+        changeScene("course-view.fxml", event);
     }
 
     /**
