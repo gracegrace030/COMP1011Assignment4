@@ -50,7 +50,7 @@ public class TeacherEditController implements Initializable {
 
         // Go back to view if update successfully
         if (isDBSuccess){
-            changeScene("course-view.fxml", event);
+            changeScene("teacher-view.fxml", event);
         }
     }
 
@@ -69,6 +69,7 @@ public class TeacherEditController implements Initializable {
 
     // Data from previous window
     public void setData(Teacher data){
+        tempTeacher = data;
         tidLabel.setText(String.valueOf(data.getTid()));
         firstNameField.setText(data.getFirstName());
         lastNameField.setText(data.getLastName());

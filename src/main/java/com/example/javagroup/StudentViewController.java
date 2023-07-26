@@ -161,7 +161,7 @@ public class StudentViewController implements Initializable {
         // Get the controller of the new scene
         StudentEditController controller = loader.getController();
         // Set the data in the controller
-//        controller.setData(data);
+        controller.setData(data);
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

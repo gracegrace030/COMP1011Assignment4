@@ -81,31 +81,31 @@ public class StudentCreateController implements Initializable {
     @FXML
     private VBox academicInfoBox4;
 
-    @FXML
-    void addCourse(ActionEvent event) {
-        ChoiceBox<String> newCourseChoiceBox = new ChoiceBox<String>();
-        ChoiceBox<String> newAcademicSeasonChoiceBox = new ChoiceBox<String>();
-        TextField newAcademicYearLabel = new TextField();
-        TextField newGradeLabel = new TextField();
-
-        newCourseChoiceBox.setPrefWidth(202);
-        newAcademicSeasonChoiceBox.setPrefWidth(202);
-        newAcademicYearLabel.setPrefWidth(202);
-        newGradeLabel.setPrefWidth(202);
-
-        academicInfoBox1.getChildren().add(newCourseChoiceBox);
-        academicInfoBox2.getChildren().add(newAcademicSeasonChoiceBox);
-        academicInfoBox3.getChildren().add(newAcademicYearLabel);
-        academicInfoBox4.getChildren().add(newGradeLabel);
-
-        for (Course.seasonEnum season : Course.seasonEnum.values()){
-            newAcademicSeasonChoiceBox.getItems().add(season.name());
-        }
-        // Course Menu
-        for (Course course : Course.getCourseFromDB()){
-            newCourseChoiceBox.getItems().add(course.getCid());
-        }
-    }
+//    @FXML
+//    void addCourse(ActionEvent event) {
+//        ChoiceBox<String> newCourseChoiceBox = new ChoiceBox<String>();
+//        ChoiceBox<String> newAcademicSeasonChoiceBox = new ChoiceBox<String>();
+//        TextField newAcademicYearLabel = new TextField();
+//        TextField newGradeLabel = new TextField();
+//
+//        newCourseChoiceBox.setPrefWidth(202);
+//        newAcademicSeasonChoiceBox.setPrefWidth(202);
+//        newAcademicYearLabel.setPrefWidth(202);
+//        newGradeLabel.setPrefWidth(202);
+//
+//        academicInfoBox1.getChildren().add(newCourseChoiceBox);
+//        academicInfoBox2.getChildren().add(newAcademicSeasonChoiceBox);
+//        academicInfoBox3.getChildren().add(newAcademicYearLabel);
+//        academicInfoBox4.getChildren().add(newGradeLabel);
+//
+//        for (Course.seasonEnum season : Course.seasonEnum.values()){
+//            newAcademicSeasonChoiceBox.getItems().add(season.name());
+//        }
+//        // Course Menu
+//        for (Course course : Course.getCourseFromDB()){
+//            newCourseChoiceBox.getItems().add(course.getCid());
+//        }
+//    }
 
     @FXML
     void createProfile(ActionEvent event) throws IOException {

@@ -262,6 +262,47 @@ public class Student {
         }
     }
 
+    public static boolean updateStudentToDB(Student student, float grade, String cid) {
+        Connection connection = null;
+        try {
+            // below two lines are used for connectivity.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // change the connection if pull to local
+            connection = DriverManager.getConnection(
+                    dbURL, userName, password);
+
+            String query = "UPDATE Students SET firstName = ?, lastName = ?, intakeYear = ?, intakeSeason = ?, graduateYear = ? WHERE sid = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+
+            preparedStmt.setString(1, student.getFirstName());
+            preparedStmt.setString(2, student.getLastName());
+            preparedStmt.setString(3, String.valueOf(student.getIntakeYear()));
+            preparedStmt.setString(4, String.valueOf(student.getIntakeSeason()));
+            preparedStmt.setString(5, String.valueOf(student.getGraduateYear()));
+            preparedStmt.setString   (6, String.valueOf(student.getSid()));
+
+            // execute the java preparedstatement
+            preparedStmt.executeUpdate();
+
+
+            // Update Grade
+            String query2 = "UPDATE AcademicRecords SET grade = ? WHERE (sid = ? AND cid = ?)";
+            PreparedStatement preparedStmt2 = connection.prepareStatement(query2);
+            preparedStmt2.setFloat(1, grade);
+            preparedStmt2.setInt(2, student.getSid());
+            preparedStmt2.setString(3, cid);
+
+            preparedStmt2.executeUpdate();
+
+            connection.close();
+            return true;
+        }
+        catch (Exception exception) {
+            System.out.println(exception);
+            return false;
+        }
+    }
+
 
     @Override
     public String toString() {
