@@ -200,7 +200,7 @@ public class Teacher {
             connection = DriverManager.getConnection(
                     dbURL, userName, password);
 
-            String query = "UPDATE Tearchers SET firstName = ?, lastName = ? WHERE tid = ?";
+            String query = "UPDATE Teachers SET firstName = ?, lastName = ? WHERE tid = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             preparedStmt.setString(1, teacher.getFirstName());

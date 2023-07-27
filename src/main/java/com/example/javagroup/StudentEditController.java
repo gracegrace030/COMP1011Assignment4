@@ -3,6 +3,7 @@ package com.example.javagroup;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,10 +15,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.Year;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class StudentEditController {
+public class StudentEditController implements Initializable {
 
     @FXML
     private VBox academicInfoBox1;
@@ -136,4 +139,17 @@ public class StudentEditController {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Intake Season Menu
+        // Academic Season Menu
+        for (Course.seasonEnum season : Course.seasonEnum.values()){
+            academicSeasonMenu.getItems().add(season.name());
+            intakeSeasonMenu.getItems().add(season.name());
+        }
+        // Course Menu
+        for (Course course : Course.getCourseFromDB()){
+            courseMenu.getItems().add(course.getCid());
+        }
+    }
 }
