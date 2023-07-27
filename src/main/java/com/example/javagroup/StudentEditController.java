@@ -44,6 +44,9 @@ public class StudentEditController implements Initializable {
     private ChoiceBox<String> courseMenu;
 
     @FXML
+    private Label courseLabel;
+
+    @FXML
     private Button editProfileButton;
 
     @FXML
@@ -89,7 +92,7 @@ public class StudentEditController implements Initializable {
         String validIntakeSeason = intakeSeasonMenu.getValue();
         Year graduateYear = Year.of(Integer.parseInt(graduateYearField.getText()));
         float grade = Float.parseFloat(gradeField.getText());
-        String cid = courseMenu.getValue();
+        String cid = courseLabel.getText();
 
         tempStudent.setFirstName(firstName);
         tempStudent.setLastName(lastName);
@@ -132,7 +135,8 @@ public class StudentEditController implements Initializable {
 
         List<List<Object>> courseInfo = Student.getStudentCoursesFromDB(data.getSid());
         for (List course : courseInfo){
-            courseMenu.setValue(String.valueOf(course.get(0)));
+//            courseMenu.setValue(String.valueOf(course.get(0)));
+            courseLabel.setText(String.valueOf(course.get(0)));
             academicSeasonMenu.setValue(String.valueOf(course.get(1)));
             academicYearField.setText(String.valueOf(course.get(2)));
             gradeField.setText(String.valueOf(course.get(3)));
@@ -146,10 +150,6 @@ public class StudentEditController implements Initializable {
         for (Course.seasonEnum season : Course.seasonEnum.values()){
             academicSeasonMenu.getItems().add(season.name());
             intakeSeasonMenu.getItems().add(season.name());
-        }
-        // Course Menu
-        for (Course course : Course.getCourseFromDB()){
-            courseMenu.getItems().add(course.getCid());
         }
     }
 }
